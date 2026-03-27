@@ -5,6 +5,8 @@ from PySide6.QtGui import QIcon
 from core.settings_manager import SettingsManager
 from core.utils import get_resource_path
 
+from ui.home_view import HomeView
+
 
 """
 Main Window Class:
@@ -26,7 +28,7 @@ class MainWindow(QMainWindow):
         #Create a settings manager object - handles all settings needs
         self.settings_manager = SettingsManager()
         
-        self.setWindowTitle(f"Tower of Babel 2.0 - Welcome {self.settings_manager.settings["username"]}")
+        self.setWindowTitle(f"Tower of Babel 2.0 - Welcome {self.settings_manager.settings['username']}")
         self.setMinimumSize(QSize(800, 500))
         
         
@@ -42,7 +44,9 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.stacked_widget)
         
         # Application views
-        self.home_view = self._create_placeholder_view("Home View\n Sounds go here")
+        self.home_view = HomeView(self.settings_manager)
+        
+        
         self.settings_view = self._create_placeholder_view("Settings View\Config goes here")
         self.edit_view = self._create_placeholder_view("Edit View\nTrimming goes here")
         

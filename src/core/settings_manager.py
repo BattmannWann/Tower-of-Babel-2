@@ -70,7 +70,7 @@ class SettingsManager:
     
     def _load_icons(self):
         
-        if self.icons_file.exists90:
+        if self.icons_file.exists():
             
             try:
                 with open(self.icons_file, "r") as f:
