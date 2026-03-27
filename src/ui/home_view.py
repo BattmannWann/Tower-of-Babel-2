@@ -8,12 +8,12 @@ from PySide6.QtGui import QIcon
 
 class HomeView(QWidget):
     
-    def __init__(self, settings_manager):
+    def __init__(self, settings_manager, audio_player):
         
         super().__init__()
         
-        #Main script which collects these will pass the object in
         self.settings_manager = settings_manager
+        self.audio_player = audio_player
         
         self.layout = QVBoxLayout(self)
         
@@ -99,8 +99,16 @@ class HomeView(QWidget):
             
             # TODO: Add custom icon logic
             
-            # TEST: print file path when clicked to see if working
-            btn.clicked.connect(lambda checked = False, p = file_path: print(f"Imagine playing: {p}"))
+            
+            devices = [
+                self.settings_manager.settings.get("default_input"),
+                self.settings_manager.settings.get("default_output")
+            ]
+            
+            volume = self.settings_manager.settings.get("volume", 1.0)
+            
+            btn.clicked.connect(lambda checked = False, p = file_path, d = devices, v = volume: 
+                self.audio_player.play_sound(p, d, v))
             
             #Place buttons in a 3-column grid
             row, col = divmod(idx, 3)

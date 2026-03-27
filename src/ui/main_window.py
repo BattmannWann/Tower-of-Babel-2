@@ -4,6 +4,7 @@ from PySide6.QtGui import QIcon
 
 from core.settings_manager import SettingsManager
 from core.utils import get_resource_path
+from core.audio_player import AudioPlayer
 
 from ui.home_view import HomeView
 
@@ -28,6 +29,9 @@ class MainWindow(QMainWindow):
         #Create a settings manager object - handles all settings needs
         self.settings_manager = SettingsManager()
         
+        #Create the audio engine
+        self.audio_player = AudioPlayer()
+        
         self.setWindowTitle(f"Tower of Babel 2.0 - Welcome {self.settings_manager.settings['username']}")
         self.setMinimumSize(QSize(800, 500))
         
@@ -44,7 +48,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.stacked_widget)
         
         # Application views
-        self.home_view = HomeView(self.settings_manager)
+        self.home_view = HomeView(self.settings_manager, self.audio_player)
         
         
         self.settings_view = self._create_placeholder_view("Settings View\Config goes here")
@@ -76,5 +80,10 @@ class MainWindow(QMainWindow):
         
         return widget
         
+        
+    def closeEvent(self, event):
+        
+        self.audio_player.stop()
+        super().closeEvent(event)
         
         
