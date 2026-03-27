@@ -13,6 +13,7 @@ from core.utils import get_resource_path
 from core.audio_player import AudioPlayer
 
 from ui.home_view import HomeView
+from ui.settings_view import SettingsView
 
 
 """
@@ -60,7 +61,7 @@ class MainWindow(QMainWindow):
         self.home_view = HomeView(self.settings_manager, self.audio_player)
         
         
-        self.settings_view = self._create_placeholder_view("Settings View\Config goes here")
+        self.settings_view = SettingsView(self.settings_manager)
         self.edit_view = self._create_placeholder_view("Edit View\nTrimming goes here")
         
         # Add views onto the stack
