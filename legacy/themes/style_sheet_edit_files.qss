@@ -1,0 +1,131 @@
+/* === Style Sheet for the Edit Files Window, ENTIRE DOCUMENT === */
+
+QWidget#ContentWidget {
+    background-color: #f3f4f6; 
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #374151; /* Tailwind's gray-700 */
+}
+
+QWidget {
+    background-color: #f3f4f6; /* Tailwind's gray-100 */
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #374151; /* Tailwind's gray-700 */
+}
+
+
+QPushButton {
+
+    background-color: #f9fafb; 
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px;
+    color: #374151;
+    font-weight: 500;
+
+}
+
+QPushButton:hover {
+    background-color: #f3f4f6; 
+}
+
+QPushButton:pressed {
+    background-color: #e5e7eb;
+    
+}
+
+
+QPushButton QLabel {
+    qproperty-alignment: AlignCenter;
+}
+
+QScrollBar:vertical {
+
+    border: none;
+    background: #f1f1f1;
+    width: 12px;
+    margin: 0px 0px 0px 0px;
+    border-radius: 4px;
+    
+}
+
+QScrollBar::handle:vertical {
+
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #227, stop:1 #77a);
+    min-height: 8px;
+    max-height: 10px;
+    border-radius:4px;
+    
+}
+
+
+QScrollBar::handle:vertical:hover {
+    background: #7575a9;
+}
+
+/* Removes up/down buttons */
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    
+    background: none;
+    border: none;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+
+/* === Volume Slider === */
+QSlider[class="VolumeSlider"] {
+    min-height: 20px;
+}
+
+
+QSlider[class="VolumeSlider"]::groove:horizontal {
+    border: 0px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #888, stop:1 #ddd);
+    height: 20px;
+    border-radius: 10px;
+}
+
+
+QSlider[class="VolumeSlider"]::handle {
+    background: qradialgradient(cx:0, cy:0, radius: 1.2, fx:0.35,
+                                            fy:0.3, stop:0 #eef, stop:1 #002);
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+}
+
+
+QSlider[class="VolumeSlider"]::sub-page:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #227, stop:1 #77a);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+
+QToolBar {
+
+    font-family: 'Roboto'
+}
+
+
+QLabel#TableContentLabels {
+
+    padding-top: 20px;
+}
+
+
+
+/* === Vertical and Horizontal Separators */
+
+QFrame#Separator {
+
+    color: gray;
+    padding: 10px;
+    
+}
