@@ -14,6 +14,7 @@ from core.audio_player import AudioPlayer
 
 from ui.home_view import HomeView
 from ui.settings_view import SettingsView
+from ui.edit_view import EditView
 
 
 """
@@ -62,7 +63,7 @@ class MainWindow(QMainWindow):
         
         
         self.settings_view = SettingsView(self.settings_manager)
-        self.edit_view = self._create_placeholder_view("Edit View\nTrimming goes here")
+        self.edit_view = EditView(self.settings_manager)
         
         # Add views onto the stack
         self.stacked_widget.addWidget(self.home_view)       # Index 0
@@ -72,7 +73,21 @@ class MainWindow(QMainWindow):
         self.stacked_widget_indexes = {self.home_view: 0, self.settings_view: 1, self.edit_view: 2}
         
         
-        self.stacked_widget.setCurrentIndex(0)
+        self.stacked_widget.setCurrentIndex(self.stacked_widget_indexes[self.home_view])
+        self.stacked_widget.currentChanged.connect(self._on_tab_changed)
+
+
+    def _on_tab_changed(self, index):
+
+        """
+        Automatically refreshes the view 
+        """
+
+        if index == self.stacked_widget_indexes[self.home_view]:
+            self.home_view.load_sounds()
+
+        elif index == self.stacked_widget_indexes[self.edit_view]:
+            self.edit_view.load_sounds()
         
         
     def _create_placeholder_view(self, text):
@@ -112,6 +127,10 @@ class MainWindow(QMainWindow):
         settings_action = QAction("Settings", self)
         settings_action.triggered.connect(lambda: self.stacked_widget.setCurrentIndex(self.stacked_widget_indexes[self.settings_view]))
         toolbar.addAction(settings_action)
+
+        edit_action = QAction("Edit Files", self)
+        edit_action.triggered.connect(lambda: self.stacked_widget.setCurrentIndex(self.stacked_widget_indexes[self.edit_view]))
+        toolbar.addAction(edit_action)
         
         toolbar.addSeparator()
         

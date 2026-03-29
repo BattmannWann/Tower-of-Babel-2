@@ -53,7 +53,7 @@ class EditView(QWidget):
         
         #Clears the grid list such that on events such as renaming the list is correct
         for i in reversed(range(self.grid.count())):
-            widget = self.grid.itemAt(i).widget
+            widget = self.grid.itemAt(i).widget()
             
             if widget:
                 widget.deleteLater()
@@ -113,7 +113,7 @@ class EditView(QWidget):
             icon_btn.clicked.connect(lambda checked, n=name: self._change_icon(n))
             
             rename_btn = QPushButton("Rename")
-            rename_btn.clicked.connect(lambda checked, p=file_path: self._rename(p))
+            rename_btn.clicked.connect(lambda checked, p=file_path: self._rename_sound(p))
             
             delete_btn = QPushButton("Delete")
             delete_btn.clicked.connect(lambda checked, p=file_path: self._delete_sound(p))
@@ -133,9 +133,78 @@ class EditView(QWidget):
         
         file_path, _ = QFileDialog.getOpenFileName(self, f"Select Icon for {name}", "", "Images (*.png *.jpg *jpeg)")
         
+        if file_path:
+
+            self.settings_manager.icons[name] = file_path
+            self.settings_manager.save_icons()
+            self.load_sounds()
+
         
+    def _rename_sound(self, file_path):
+
+        """
+        Safely renames a file using PySide6's built-in text dialogue
+        """
+
+        old_name = file_path.stem
+        new_name, ok = QInputDialog.getText(self, "Rename Sound", f"Enter a new name for: {old_name}")
+
+        if ok and new_name.strip() and new_name.strip() != old_name:
+
+            new_path = file_path.with_name(f"{new_name.strip()}{file_path.suffix}")
+
+            if new_path.exists():
+
+                QMessageBox.warning(self, "Error", "A sound with this name already exists.")
+                return
             
+            try:
+                file_path.rename(new_path)
+
+                if old_name in self.settings_manager.icons:
+
+                    self.settings_manager.icons[new_name.strip()] = self.settings_manager.icons.pop(old_name)
+                    self.settings_manager.save_icons()
+
+
+                self.load_sounds()
+
+            except Exception as e:
+                QMessageBox.warning(self, "Error", f"Could not rename file, see: {e}")
+
+        
+    def _delete_sound(self, file_path):
+
+        """
+        Deletes a file, asking for confirmation before deleting a file
+        """
+
+        reply = QMessageBox.question(self, 
+            "Confirm Deletion", 
+            f"Are you sure you want to delete '{file_path.stem}'?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        
+        if reply == QMessageBox.StandardButton.Yes:
+
+            try:
+                #Safely removes the file
+                file_path.unlink()
+
+                #Also removes the icon
+                if file_path.stem in self.settings_manager.icons:
+
+                    del self.settings_manager.icons[file_path.stem]
+                    self.settings_manager.save_icons()
+
+                self.load_sounds()
+
+            except Exception as e:
+                QMessageBox.warning(self, "Error", f"Could not delete the file: {file_path.stem}, see: {e}")
+
+
+
                 
-        
-        
-        
+
+
+
+
