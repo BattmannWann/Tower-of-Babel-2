@@ -63,7 +63,7 @@ class MainWindow(QMainWindow):
         
         
         self.settings_view = SettingsView(self.settings_manager)
-        self.edit_view = EditView(self.settings_manager)
+        self.edit_view = EditView(self.settings_manager, self.audio_player)
         
         # Add views onto the stack
         self.stacked_widget.addWidget(self.home_view)       # Index 0

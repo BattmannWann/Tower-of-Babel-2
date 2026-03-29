@@ -1,0 +1,43 @@
+/* --- Global Font and Background --- */
+QWidget {
+    font-family: "Segoe UI", "Roboto", "San Francisco", sans-serif;
+    font-size: 14px;
+    background-color: #1e1e2e; /* Deep, modern dark background */
+    color: #cdd6f4; /* Soft, readable off-white text */
+}
+
+/* --- Main Window --- */
+QMainWindow {
+    background-color: #1e1e2e;
+}
+
+/* --- Buttons --- */
+QPushButton {
+    background-color: #89b4fa; /* A nice, soft primary blue */
+    color: #11111b; /* Dark text for contrast */
+    border: none;
+    border-radius: 8px; /* Soft corners */
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #b4befe; /* Lighter blue on hover */
+}
+
+QPushButton:pressed {
+    background-color: #74c7ec; /* Different shade when clicked */
+}
+
+/* --- Text Inputs (Line Edits) --- */
+QLineEdit {
+    background-color: #313244; /* Slightly lighter than the background */
+    border: 1px solid #45475a; /* Subtle border */
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #cdd6f4;
+}
+
+QLineEdit:focus {
+    border: 1px solid #89b4fa; /* Highlight border with primary color on focus */
+}
