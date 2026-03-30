@@ -7,15 +7,16 @@ def main():
     
     app = QApplication(sys.argv)
 
-    style_path = Path(__file__).parent / "assets" / "styles.qss"
+    # style_path_dir = Path(__file__).parent / "assets"
+    # style_paths = list(style_path_dir.rglob("*.qss"))
 
-    if style_path.exists():
+    # if style_paths:
 
-        with open(style_path, "r") as style_file:
-            app.setStyleSheet(style_file.read())
+    #     with open(style_paths[0], "r") as style_file:
+    #         app.setStyleSheet(style_file.read())
 
-    else:
-        print(f"Styling warning: could not find: {style_path}")
+    # else:
+    #     print(f"Styling warning: could not find any .qss files in {style_path_dir}")
 
     window = MainWindow()
     window.show()

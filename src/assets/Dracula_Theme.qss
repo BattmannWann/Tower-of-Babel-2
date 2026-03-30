@@ -1,0 +1,86 @@
+/* --- Global --- */
+QWidget {
+    font-family: "Consolas", "Courier New", monospace; /* Edgy mono look */
+    font-size: 14px;
+    background-color: #282a36;
+    color: #f8f8f2;
+}
+
+/* --- Main Window & Dialogs --- */
+QMainWindow, QDialog {
+    background-color: #282a36;
+}
+
+/* --- Buttons --- */
+QPushButton {
+    background-color: #ff79c6; /* Pink */
+    color: #282a36;
+    border: none;
+    border-radius: 4px; /* Sharper corners */
+    padding: 8px 16px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #ff92d0;
+}
+QPushButton:pressed {
+    background-color: #ff5ebc;
+}
+
+/* --- Toolbar & Menus --- */
+QToolBar {
+    background-color: #44475a;
+    border-bottom: 2px solid #bd93f9; /* Purple accent border */
+    spacing: 5px;
+    padding: 5px;
+}
+QMenuBar {
+    background-color: #44475a;
+}
+QMenuBar::item:selected {
+    background-color: #6272a4;
+}
+QMenu {
+    background-color: #44475a;
+    border: 1px solid #6272a4;
+}
+QMenu::item:selected {
+    background-color: #bd93f9;
+    color: #282a36;
+}
+
+/* --- Sliders --- */
+/* QSlider::groove:horizontal {
+    border: none;
+    height: 8px;
+    background: #44475a;
+}
+QSlider::sub-page:horizontal {
+    background: #8be9fd; /* Cyan selection */
+/* }
+QSlider::handle:horizontal {
+    background: #ff79c6;
+    border: none;
+    width: 18px;
+    height: 18px;
+    margin: -5px 0;
+    border-radius: 9px;
+} */ 
+
+/* --- Scrollbars --- */
+QScrollBar:vertical {
+    border: none;
+    background: #282a36;
+    width: 12px;
+}
+QScrollBar::handle:vertical {
+    background: #6272a4;
+    min-height: 20px;
+    border-radius: 6px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #bd93f9;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}

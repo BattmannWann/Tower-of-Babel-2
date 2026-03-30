@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QGridLayout, QLabel, QPushButton,
     QScrollArea, QMessageBox, QInputDialog, 
-    QFileDialog, QHBoxLayout, QFrame, QDialog
+    QFileDialog, QHBoxLayout, QFrame, QDialog, QStyleFactory
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
@@ -73,10 +73,7 @@ class TrimDialog(QDialog):
         button_layout.addWidget(revert_button)
 
         save_button = QPushButton("Save")
-        font = save_button.font()
-        
-        font.setBold(True)
-        save_button.setFont(font)
+        save_button.setStyleSheet("font-weight: bold;")
 
         save_button.clicked.connect(self._save_trim)
         button_layout.addWidget(save_button)
@@ -146,7 +143,7 @@ class TrimDialog(QDialog):
 
         backup_path = self.settings_manager.unedited_sounds_path / self.file_path.name
 
-        if not backup_path.exists():
+        if backup_path.exists():
 
             shutil.copy2(backup_path, self.file_path)
             QMessageBox.information(self, "Success!", "Restored to original unedited sound!")
@@ -171,12 +168,8 @@ class EditView(QWidget):
         self.layout = QVBoxLayout(self)
         
         title = QLabel("Edit Sounds")
-        font = title.font()
+        title.setStyleSheet("font-size: 24pt; font-weight: bold;")
         
-        font.setPointSize(24)
-        font.setBold(True)
-        
-        title.setFont(font)
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(title)
         self.layout.addSpacing(20)
@@ -216,13 +209,7 @@ class EditView(QWidget):
         for col, text in enumerate(headers):
             
             label = QLabel(text)
-            
-            font = label.font()
-            font.setBold(True)
-            font.setPointSize(24)
-            
-            
-            label.setFont(font)
+            label.setStyleSheet("font-size: 24pt; font-weight: bold;")
             label.setAlignment(Qt.AlignmentFlag.AlignCenter)
             
             self.grid.addWidget(label, 0, col)

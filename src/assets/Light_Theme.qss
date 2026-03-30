@@ -1,0 +1,98 @@
+/* --- Global --- */
+QWidget {
+    font-family: "Segoe UI", "San Francisco", sans-serif;
+    font-size: 14px;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* --- Main Window & Dialogs --- */
+QMainWindow, QDialog {
+    background-color: #f8f9fa;
+}
+
+/* --- Buttons --- */
+QPushButton {
+    background-color: #0d6efd;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #0b5ed7;
+}
+QPushButton:pressed {
+    background-color: #0a58ca;
+}
+QPushButton:disabled {
+    background-color: #e9ecef;
+    color: #adb5bd;
+}
+
+/* --- Toolbar & Menus --- */
+QToolBar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    spacing: 5px;
+    padding: 5px;
+}
+QMenuBar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+}
+QMenuBar::item:selected {
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+QMenu {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+}
+QMenu::item:selected {
+    background-color: #0d6efd;
+    color: #ffffff;
+}
+
+/* --- Sliders (QSlider & QDoubleRangeSlider) --- */
+/* QSlider::groove:horizontal {
+    border: none;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+}
+QSlider::sub-page:horizontal {
+    background: #0d6efd; /* The active selection color */
+    /* border-radius: 3px; */
+/* }
+QSlider::handle:horizontal {
+    background: #ffffff;
+    border: 2px solid #0d6efd;
+    width: 16px;
+    height: 16px;
+    margin: -6px 0;
+    border-radius: 8px;
+}
+QSlider::handle:horizontal:hover {
+    background: #e9ecef;
+} */ 
+
+/* --- Scrollbars --- */
+QScrollBar:vertical {
+    border: none;
+    background: #f8f9fa;
+    width: 10px;
+    margin: 0px;
+}
+QScrollBar::handle:vertical {
+    background: #ced4da;
+    min-height: 20px;
+    border-radius: 5px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #adb5bd;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
