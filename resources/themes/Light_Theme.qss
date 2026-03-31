@@ -56,7 +56,7 @@ QMenu::item:selected {
 }
 
 /* --- Sliders (QSlider & QDoubleRangeSlider) --- */
-/* QSlider::groove:horizontal {
+ QSlider::groove:horizontal {
     border: none;
     height: 6px;
     background: #e9ecef;
@@ -64,8 +64,8 @@ QMenu::item:selected {
 }
 QSlider::sub-page:horizontal {
     background: #0d6efd; /* The active selection color */
-    /* border-radius: 3px; */
-/* }
+     border-radius: 3px; 
+}
 QSlider::handle:horizontal {
     background: #ffffff;
     border: 2px solid #0d6efd;
@@ -76,7 +76,7 @@ QSlider::handle:horizontal {
 }
 QSlider::handle:horizontal:hover {
     background: #e9ecef;
-} */ 
+} 
 
 /* --- Scrollbars --- */
 QScrollBar:vertical {
@@ -95,4 +95,9 @@ QScrollBar::handle:vertical:hover {
 }
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
     height: 0px;
+}
+
+/* --- Custom Slider Fix --- */
+QDoubleRangeSlider, QDoubleRangeSlider * {
+    background-color: transparent;
 }

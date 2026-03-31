@@ -40,13 +40,8 @@ class AudioPlayer:
         self.threads = []
         
         #Start a playback thread for each valid device
-        valid_devices = []
-        
-        for device in set(devices):
-            
-            if device is not None and device != -1:
-                valid_devices.append(device)
-                
+        valid_devices = [device for device in set(devices) if device != -1]
+
         #If no valid devices found, try using None, which forces PortAudio
         if not valid_devices:
             
@@ -81,8 +76,8 @@ class AudioPlayer:
                 print(f"Device {device} has no output channels.")
                 return
             
-            #Match channels such that, for e.g., if MP3 is stereo but mic is mono, then:
-            data = self._match_channels(data, max_channels)
+            target_channels = min(2, max_channels)
+            data = self._match_channels(data, target_channels)
             
             with sd.OutputStream(
                 device = device,
@@ -108,6 +103,7 @@ class AudioPlayer:
                     
         except Exception as e:
             print(f"Unable to play sound on device: {device}, see: {e}")
+            
             
             
     def _match_channels(self, data, max_channels):

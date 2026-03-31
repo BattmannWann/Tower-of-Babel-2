@@ -97,7 +97,14 @@ class HomeView(QWidget):
             
             btn.setFont(font)
             
-            # TODO: Add custom icon logic
+            
+            icons = self.settings_manager.icons
+            
+            if icons:
+                
+                if icons.get(name):
+                    btn.setIcon(QIcon(icons[name]))
+                    btn.setIconSize(QSize(50, 50))
             
             
             devices = [

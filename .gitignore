@@ -11,6 +11,7 @@
 *.backup*
 *.dbs
 
+test.py
 
 # === PYTHON ===
 

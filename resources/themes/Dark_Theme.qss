@@ -41,3 +41,8 @@ QLineEdit {
 QLineEdit:focus {
     border: 1px solid #89b4fa; /* Highlight border with primary color on focus */
 }
+
+/* --- Custom Slider Fix --- */
+QDoubleRangeSlider, QDoubleRangeSlider * {
+    background-color: transparent;
+}

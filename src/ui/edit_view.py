@@ -104,7 +104,7 @@ class TrimDialog(QDialog):
         sf.write(temp_path, trimmed_data, fs)
 
         devices = [self.settings_manager.settings.get("default_input"),
-                   self.settings_manager.settings.get("default_output")]
+                   None]
         
         vol = self.settings_manager.settings.get("volume", 1.0)
         self.audio_player.play_sound(temp_path, devices, vol)

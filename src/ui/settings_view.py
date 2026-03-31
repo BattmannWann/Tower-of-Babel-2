@@ -4,7 +4,8 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 import sounddevice as sd
-
+from pathlib import Path
+from core.utils import get_resource_path
 
 class SettingsView(QWidget):
     
@@ -79,17 +80,26 @@ class SettingsView(QWidget):
         
         
         #Audio Devices
-        self.grid.addWidget(QLabel("Input Device (Mic): "), 2, 0, Qt.AlignmentFlag.AlignRight)
+        self.grid.addWidget(QLabel("Primary Output (Headphones): "), 2, 0, Qt.AlignmentFlag.AlignRight)
         self.input_combo = QComboBox()
         self.input_combo.setFixedWidth(300)
         self.grid.addWidget(self.input_combo, 2, 1)
         
-        self.grid.addWidget(QLabel("Output Device (Speakers): "), 3, 0, Qt.AlignmentFlag.AlignRight)
+        self.grid.addWidget(QLabel("Secondary Output (Virtual Cable): "), 3, 0, Qt.AlignmentFlag.AlignRight)
         self.output_combo = QComboBox()
         self.output_combo.setFixedWidth(300)
         self.grid.addWidget(self.output_combo, 3, 1)
         
         self._populate_audio_devices()
+        
+        
+        #Application Theme
+        self.grid.addWidget(QLabel("Theme: "), 4, 0, Qt.AlignmentFlag.AlignRight)
+        self.theme_combo = QComboBox()
+        self.theme_combo.setFixedWidth(300)
+        self.grid.addWidget(self.theme_combo, 4, 1)
+        
+        self._populate_themes()
         
     
         #Save button
@@ -101,6 +111,25 @@ class SettingsView(QWidget):
         
         self.layout.addWidget(save_btn, alignment = Qt.AlignmentFlag.AlignCenter)
         
+        
+        
+    def _populate_themes(self):
+    
+        style_path_dir = get_resource_path("resources/themes/")
+        style_paths = {file.name.strip(".qss").replace("_", " "): file.name for file in list(style_path_dir.rglob("*.qss"))}
+        
+        if style_paths:
+            
+            for key, value in style_paths.items():
+                self.theme_combo.addItem(key, userData = value)
+
+        saved_theme = self.settings_manager.settings.get("default_theme")
+        
+        if saved_theme:
+            index = self.theme_combo.findData(saved_theme)
+            
+            if index != -1:
+                self.theme_combo.setCurrentIndex(index)
         
     def _populate_audio_devices(self):
         
@@ -125,18 +154,26 @@ class SettingsView(QWidget):
         
         for idx, device in enumerate(devices):
             
-            #user userData = i to securely store hardware index
-            if device["max_input_channels"] > 0:
-                self.input_combo.addItem(device["name"], userData = idx)
+            try:
+            
+                hostapi_name = sd.query_devices(device["hostapi"])["name"]
+                display_name = f"{device['name']} ({hostapi_name})"
                 
-                if idx == saved_input:
-                    self.input_combo.setCurrentIndex(self.input_combo.count() - 1)
+                #user userData = i to securely store hardware index
+                if device["max_output_channels"] > 0:
                     
-            if device["max_output_channels"] > 0:
-                self.output_combo.addItem(device["name"], userData = idx)
-                
-                if idx == saved_output:
-                    self.output_combo.setCurrentIndex(self.output_combo.count() - 1)
+                    self.input_combo.addItem(display_name, userData = idx)
+                    
+                    if idx == saved_input:
+                        self.input_combo.setCurrentIndex(self.input_combo.count() - 1)
+                        
+                    self.output_combo.addItem(display_name, userData = idx)
+                    
+                    if idx == saved_output:
+                        self.output_combo.setCurrentIndex(self.output_combo.count() - 1)
+                        
+            except Exception as e:
+                print(f"Skipping device {idx} due to an error, see: {e}")
                     
                     
     def save_settings(self):
@@ -156,11 +193,13 @@ class SettingsView(QWidget):
         self.settings_manager.settings["default_input"] = selected_input
         self.settings_manager.settings["default_output"] = selected_output
         
+        self.settings_manager.settings["default_theme"] = self.theme_combo.currentData()
+        
         #Write to disk
         self.settings_manager.save_settings()
         
         #Provide user feedback
-        QMessageBox.information(self, "Success", "Settings saved successfully! \n\n(Note: The Main Window title will update on next launch)")
+        QMessageBox.information(self, "Success", "Settings saved successfully! \n\n(Note: The Main Window title and theme will update on next launch)")
         
         
 

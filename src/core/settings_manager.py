@@ -43,11 +43,20 @@ class SettingsManager:
             "volume": 1.0,
             "username": getpass.getuser(),
             "default_input": None,
-            "default_output": None
+            "default_output": None,
+            "default_theme": "TheNothing_Theme.qss"
         }
         
         try:
             default_settings["default_input"], default_settings["default_output"] = sd.default.device
+            
+            for idx, device in enumerate(sd.query_devices()):
+                
+                if "CABLE INPUT" in device["name"] and device["max_output_channels"] > 0:
+                    
+                    default_settings["default_output"] = idx
+                    break
+                    
         
         except Exception as e:
             print(f"Audio device was not found, see: {e}")
