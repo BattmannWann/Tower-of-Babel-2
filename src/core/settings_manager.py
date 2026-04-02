@@ -11,7 +11,7 @@ class SettingsManager:
     """
     
     
-    def __init__(self):
+    def __init__(self, app):
         
         #Create hidden app directory 
         self.app_dir = Path.home() / ".tower_of_babel"
@@ -30,6 +30,7 @@ class SettingsManager:
         #Load the data into memory
         self.settings = self._load_settings()
         self.icons = self._load_icons()
+        self.app_instance = app
         
         
     def _load_settings(self):

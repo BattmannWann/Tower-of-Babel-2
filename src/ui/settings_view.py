@@ -2,10 +2,11 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QGridLayout, QLabel, 
     QLineEdit, QPushButton, QComboBox, QSlider, QMessageBox
 )
+
 from PySide6.QtCore import Qt
 import sounddevice as sd
 from pathlib import Path
-from core.utils import get_resource_path
+from core.utils import get_resource_path, set_theme
 
 class SettingsView(QWidget):
     
@@ -101,6 +102,7 @@ class SettingsView(QWidget):
         
         self._populate_themes()
         
+        
     
         #Save button
         self.layout.addSpacing(30)
@@ -130,6 +132,7 @@ class SettingsView(QWidget):
             
             if index != -1:
                 self.theme_combo.setCurrentIndex(index)
+                
         
     def _populate_audio_devices(self):
         
@@ -198,8 +201,10 @@ class SettingsView(QWidget):
         #Write to disk
         self.settings_manager.save_settings()
         
+        set_theme(self.theme_combo.currentData(), self.settings_manager.app_instance)
+        
         #Provide user feedback
-        QMessageBox.information(self, "Success", "Settings saved successfully! \n\n(Note: The Main Window title and theme will update on next launch)")
+        QMessageBox.information(self, "Success", "Settings saved successfully!")
         
         
 

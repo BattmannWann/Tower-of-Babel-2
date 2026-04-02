@@ -4,6 +4,9 @@ QWidget {
     font-size: 14px;
     background-color: #1e1e2e; /* Deep, modern dark background */
     color: #cdd6f4; /* Soft, readable off-white text */
+    
+    selection-background-color: #89b4fa;
+    selection-color: #11111b; 
 }
 
 /* --- Main Window --- */
@@ -17,7 +20,7 @@ QPushButton {
     color: #11111b; /* Dark text for contrast */
     border: none;
     border-radius: 8px; /* Soft corners */
-    padding: 10px 20px;
+    padding: 8px 16px;
     font-weight: bold;
 }
 
@@ -40,6 +43,45 @@ QLineEdit {
 
 QLineEdit:focus {
     border: 1px solid #89b4fa; /* Highlight border with primary color on focus */
+}
+
+/* --- Sliders (QSlider) --- */
+QSlider::groove:horizontal {
+    border: none;
+    height: 6px; /* Thickness of the track */
+    background-color: #313244; /* Matches the text input background */
+    border-radius: 3px;
+}
+
+/* The filled part of the track (left of the handle) */
+QSlider::sub-page:horizontal {
+    background-color: #89b4fa; 
+    border-radius: 3px;
+}
+
+/* The empty part of the track (right of the handle) */
+QSlider::add-page:horizontal {
+    background-color: #313244;
+    border-radius: 3px;
+}
+
+/* The draggable knob */
+QSlider::handle:horizontal {
+    background-color: #cdd6f4; /* Off-white handle */
+    border: 2px solid #89b4fa; /* Blue ring around it */
+    width: 16px;
+    height: 16px;
+    margin: -6px 0; /* Centers the 16px handle on the 6px groove */
+    border-radius: 8px; /* Makes it a perfect circle */
+}
+
+QSlider::handle:horizontal:hover {
+    background-color: #ffffff; /* Brightens when hovered */
+    border-color: #b4befe; 
+}
+
+QSlider::handle:horizontal:pressed {
+    background-color: #89b4fa; /* Fills in blue when dragged */
 }
 
 /* --- Custom Slider Fix --- */

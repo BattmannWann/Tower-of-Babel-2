@@ -3,7 +3,7 @@ from pathlib import Path
 
 from PySide6.QtWidgets import (
     QMainWindow, QStackedWidget, QWidget, QVBoxLayout, 
-    QLabel, QToolBar, QFileDialog, QDialog, QTextBrowser, QPushButton)
+    QLabel, QToolBar, QFileDialog, QDialog, QTextBrowser, QPushButton, QSlider)
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon, QAction
@@ -85,18 +85,18 @@ class SetupGuideDialog(QDialog):
 
 class MainWindow(QMainWindow):
     
-    def __init__(self):
+    def __init__(self, app):
         
         super().__init__()
         
         #Create a settings manager object - handles all settings needs
-        self.settings_manager = SettingsManager()
+        self.settings_manager = SettingsManager(app)
         
         #Create the audio engine
         self.audio_player = AudioPlayer()
         
         self.setWindowTitle(f"Tower of Babel 2.0")
-        self.setMinimumSize(QSize(1000, 500))
+        self.setMinimumSize(QSize(1500, 500))
         
         
         #Fetch the app icon
@@ -173,6 +173,10 @@ class MainWindow(QMainWindow):
         toolbar.setMovable(False)
         self.addToolBar(toolbar)
         
+        spacer = QWidget()
+        spacer.setFixedSize(450, 0)
+        
+        
         #Home Button (switches the stacked layout index to 0)
         home_action = QAction("Home", self)
         home_action.triggered.connect(lambda: self.stacked_widget.setCurrentIndex(self.stacked_widget_indexes[self.home_view]))
@@ -205,6 +209,29 @@ class MainWindow(QMainWindow):
         stop_sounds_action.triggered.connect(self.audio_player.stop)
         toolbar.addAction(stop_sounds_action)
         
+        toolbar.addSeparator()
+        toolbar.addWidget(spacer)
+        
+        #Current Sound Volume Slider
+        volume_label = QAction("Volume", self)
+        volume_label.setDisabled(True)
+        toolbar.addAction(volume_label)
+        
+        volume_slider = QSlider(Qt.Orientation.Horizontal)
+        volume_slider.setRange(1, 100)
+        volume_slider.setSingleStep(1)
+        volume_slider.setValue(self.settings_manager.settings.get("volume")*100)
+        volume_slider.setFixedWidth(250)
+        volume_slider.valueChanged.connect(self._set_volume)
+        
+        toolbar.addWidget(volume_slider)
+        
+    
+    def _set_volume(self, value):
+        
+        self.settings_manager.settings["volume"] = value / 100
+        self.home_view.load_sounds()
+         
         
     def _show_setup_guide(self):
         
@@ -213,7 +240,7 @@ class MainWindow(QMainWindow):
         """
         
         dialog = SetupGuideDialog(self)
-        dialog.exec()
+        dialog.show()
             
     
         

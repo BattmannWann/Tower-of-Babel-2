@@ -128,7 +128,7 @@ Then, issue the following command:
 
 If you want to build the application into an executable locally, go to the root directory and issue the following command:
 
-`pyinstaller --noconsole --onefile --windowed --add-data "resources;resources" src/main.py`
+`pyinstaller --noconsole --onefile --windowed --icon="resources/icons/cassette.ico" --add-data "resources;resources" src/main.py`
 
 > *Note If you do not have `pyinstaller` already installed, run: `pip install pyinstaller` inside your virtual environment*
 
