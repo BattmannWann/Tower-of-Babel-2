@@ -3,6 +3,8 @@ import getpass
 from pathlib import Path
 import sounddevice as sd
 
+from PySide6.QtCore import Qt
+
 class SettingsManager:
     
     """
@@ -45,7 +47,8 @@ class SettingsManager:
             "username": getpass.getuser(),
             "default_input": None,
             "default_output": None,
-            "default_theme": "TheNothing_Theme.qss"
+            "default_theme": "TheNothing_Theme.qss",
+            "spam_play": False
         }
         
         try:

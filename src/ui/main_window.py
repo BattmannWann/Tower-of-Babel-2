@@ -3,7 +3,7 @@ from pathlib import Path
 
 from PySide6.QtWidgets import (
     QMainWindow, QStackedWidget, QWidget, QVBoxLayout, 
-    QLabel, QToolBar, QFileDialog, QDialog, QTextBrowser, QPushButton, QSlider)
+    QLabel, QToolBar, QFileDialog, QDialog, QTextBrowser, QPushButton, QSlider, QCheckBox)
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon, QAction
@@ -93,7 +93,7 @@ class MainWindow(QMainWindow):
         self.settings_manager = SettingsManager(app)
         
         #Create the audio engine
-        self.audio_player = AudioPlayer()
+        self.audio_player = AudioPlayer(self.settings_manager)
         
         self.setWindowTitle(f"Tower of Babel 2.0")
         self.setMinimumSize(QSize(1500, 500))
@@ -174,7 +174,7 @@ class MainWindow(QMainWindow):
         self.addToolBar(toolbar)
         
         spacer = QWidget()
-        spacer.setFixedSize(450, 0)
+        spacer.setFixedSize(200, 0)
         
         
         #Home Button (switches the stacked layout index to 0)
@@ -212,6 +212,12 @@ class MainWindow(QMainWindow):
         toolbar.addSeparator()
         toolbar.addWidget(spacer)
         
+        #Continuous Play Checkbox
+        spam_play_checkbox = QCheckBox("Continuous Playback", self)
+        spam_play_checkbox.checkStateChanged.connect(self._on_checkbox_changed)
+        toolbar.addWidget(spam_play_checkbox)
+        
+        
         #Current Sound Volume Slider
         volume_label = QAction("Volume", self)
         volume_label.setDisabled(True)
@@ -226,6 +232,17 @@ class MainWindow(QMainWindow):
         
         toolbar.addWidget(volume_slider)
         
+        
+    def _on_checkbox_changed(self, state):
+        
+        print(f"Checkbox Changed to state: {state}, settings: {self.settings_manager.settings.get("spam_play")}")
+        
+        if state == Qt.CheckState.Checked:
+            self.settings_manager.settings["spam_play"] = True
+            
+        elif state == Qt.CheckState.Unchecked:
+            self.settings_manager.settings["spam_play"] = False
+            
     
     def _set_volume(self, value):
         

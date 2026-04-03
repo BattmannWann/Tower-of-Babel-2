@@ -83,12 +83,12 @@ class SettingsView(QWidget):
         #Audio Devices
         self.grid.addWidget(QLabel("Primary Output (Headphones): "), 2, 0, Qt.AlignmentFlag.AlignRight)
         self.input_combo = QComboBox()
-        self.input_combo.setFixedWidth(300)
+        self.input_combo.setFixedWidth(500)
         self.grid.addWidget(self.input_combo, 2, 1)
         
         self.grid.addWidget(QLabel("Secondary Output (Virtual Cable): "), 3, 0, Qt.AlignmentFlag.AlignRight)
         self.output_combo = QComboBox()
-        self.output_combo.setFixedWidth(300)
+        self.output_combo.setFixedWidth(500)
         self.grid.addWidget(self.output_combo, 3, 1)
         
         self._populate_audio_devices()

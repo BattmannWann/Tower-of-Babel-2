@@ -2,14 +2,16 @@ import threading
 import sounddevice as sd
 import soundfile as sf
 import numpy as np
+from PySide6.QtCore import Qt
 
 
 class AudioPlayer: 
     
-    def __init__(self):
+    def __init__(self, settings_manager):
         
         self.stop_event = threading.Event()
         self.threads = []
+        self.settings_manager = settings_manager
         
         
     def play_sound(self, path, devices, volume = 1.0):
@@ -17,8 +19,10 @@ class AudioPlayer:
         """
         Plays a sound file on multiple devices simultaneously 
         """
-        #Stop any currently playing sounds first TODO: decide whether or not to keep this
-        self.stop()
+        
+        if self.settings_manager.settings["spam_play"] == False:
+            self.stop()
+            
         
         try:
             data, samplerate = sf.read(path, dtype = "float32")
