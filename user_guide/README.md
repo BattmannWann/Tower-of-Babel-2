@@ -236,9 +236,3 @@ On the toolbar, you will see additional features:
 - The `Continuous Playback` checkbox: Enables/disables continuous playback. In other words, play all sounds simultaneously or stop the previous sound before playing the new one
 
 - The `Volume` slider: Changes the CURRENT volume at which sounds are played at (does not change the system default, this is done in the `Settings` page)
-
-
-
-
-
-
